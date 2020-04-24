@@ -1,13 +1,11 @@
 <template>
-    <div>
-        <swiper>
-            <swiper-item v-for="item in banners">
-                <a :href="item.link">
-                    <img :src="item.image" alt="">
-                </a>
-            </swiper-item>
-        </swiper>
-    </div>
+    <swiper>
+        <swiper-item v-for="item in banners" >
+            <a :href="item.link">
+                <img :src="item.image" alt="" @load="loadImage">
+            </a>
+        </swiper-item>
+    </swiper>
 </template>
 
 <script>
@@ -22,10 +20,25 @@
                 }
             }
         },
+        data(){
+            return {
+                isLoad: false
+            }
+        },
         components:{
             Swiper,
             SwiperItem
+        },
+        methods:{
+            loadImage(){
+                if(! this.isLoad){
+                    this.$emit('swiperImageLoad')
+                    this.isLoad= true
+                }
+
+            }
         }
+
     }
 </script>
 
